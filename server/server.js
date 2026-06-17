@@ -19,6 +19,17 @@ app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+// Must run before routes — no-op when already connected (local dev / warm serverless)
+app.use(async (req, res, next) => {
+  if (mongoose.connection.readyState === 1) return next();
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    next();
+  } catch (err) {
+    res.status(500).json({ message: 'Database connection failed' });
+  }
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/pins', pinRoutes);
 app.use('/api/users', userRoutes);
@@ -26,16 +37,7 @@ app.use('/api/collections', collectionRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
-// Cached connection for serverless warm starts
-let isConnected = false;
-const connectDB = async () => {
-  if (isConnected) return;
-  await mongoose.connect(process.env.MONGODB_URI);
-  isConnected = true;
-};
-
 if (require.main === module) {
-  // Running directly with node (local dev)
   const PORT = process.env.PORT || 5001;
   mongoose
     .connect(process.env.MONGODB_URI)
@@ -47,16 +49,6 @@ if (require.main === module) {
       console.error('MongoDB connection error:', err.message);
       process.exit(1);
     });
-} else {
-  // Imported by Vercel — connect on first request
-  app.use(async (req, res, next) => {
-    try {
-      await connectDB();
-      next();
-    } catch (err) {
-      res.status(500).json({ message: 'Database connection failed' });
-    }
-  });
 }
 
 module.exports = app;
