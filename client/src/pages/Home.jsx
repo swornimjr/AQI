@@ -50,12 +50,12 @@ export default function Home({ searchValue }) {
       >
         <button
           onClick={() => setActiveStyle('')}
-          className={`shrink-0 px-4 py-1.5 rounded-full text-[11px] tracking-widest uppercase transition-colors font-medium ${
+          className={`shrink-0 rounded-full text-[11px] tracking-widest uppercase transition-colors font-medium ${
             activeStyle === ''
               ? 'bg-[#2dd4bf] text-[#00574d]'
               : 'text-[#bacac5] hover:text-[#d4e6e1]'
           }`}
-          style={{ fontFamily: 'JetBrains Mono', background: activeStyle === '' ? undefined : 'rgba(40,56,52,0.4)' }}
+          style={{ fontFamily: 'JetBrains Mono', background: activeStyle === '' ? undefined : 'rgba(40,56,52,0.4)', padding: '6px 16px' }}
         >
           All
         </button>
@@ -64,12 +64,12 @@ export default function Home({ searchValue }) {
           <button
             key={s}
             onClick={() => setActiveStyle(activeStyle === s ? '' : s)}
-            className={`shrink-0 px-4 py-1.5 rounded-full text-[11px] tracking-widest uppercase transition-colors font-medium ${
+            className={`shrink-0 rounded-full text-[11px] tracking-widest uppercase transition-colors font-medium ${
               activeStyle === s
                 ? 'bg-[#2dd4bf] text-[#00574d]'
                 : 'text-[#bacac5] hover:text-[#d4e6e1]'
             }`}
-            style={{ fontFamily: 'JetBrains Mono', background: activeStyle === s ? undefined : 'rgba(40,56,52,0.4)' }}
+            style={{ fontFamily: 'JetBrains Mono', background: activeStyle === s ? undefined : 'rgba(40,56,52,0.4)', padding: '6px 16px' }}
           >
             {s}
           </button>
@@ -79,8 +79,8 @@ export default function Home({ searchValue }) {
         <div className="ml-auto shrink-0 relative">
           <button
             onClick={() => setSortOpen((v) => !v)}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[11px] tracking-widest uppercase text-[#d4e6e1] transition-colors"
-            style={{ fontFamily: 'JetBrains Mono', background: 'rgba(40,56,52,0.4)' }}
+            className="flex items-center gap-1.5 rounded-full text-[11px] tracking-widest uppercase text-[#d4e6e1] transition-colors"
+            style={{ fontFamily: 'JetBrains Mono', background: 'rgba(40,56,52,0.4)', padding: '6px 16px' }}
           >
             {currentSortLabel}
             <span className="material-symbols-outlined text-[16px]">expand_more</span>
