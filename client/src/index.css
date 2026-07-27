@@ -1,15 +1,42 @@
 @import "tailwindcss";
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* ---------------------------------------------------------------------------
+   Design tokens — the single source of truth for the AquaScape Inspire look.
+   Deep-water darks, one bioluminescent aqua accent, warm amber for equipment.
+--------------------------------------------------------------------------- */
+@theme {
+  /* Water column — darkest to lightest */
+  --color-abyss: #061613;
+  --color-deep: #0b1f1b;
+  --color-surface: #13221f;
+  --color-ink: #283834;
+  --color-line: #3c4a46;
+
+  /* Text */
+  --color-foam: #d4e6e1;
+  --color-mist: #bacac5;
+  --color-subtle: #859490;
+
+  /* Accents */
+  --color-aqua: #57f1db;
+  --color-aqua-bright: #2dd4bf;
+  --color-aqua-deep: #003731;
+  --color-amber: #e8a954;
+
+  /* Type */
+  --font-sans: 'Manrope', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 body {
-  background-color: #061613;
-  color: #d4e6e1;
-  font-family: 'Manrope', sans-serif;
+  background-color: var(--color-abyss);
+  /* Ambient light falling through the water surface */
+  background-image:
+    radial-gradient(ellipse 70% 45% at 18% -8%, rgba(87, 241, 219, 0.07), transparent),
+    radial-gradient(ellipse 55% 35% at 85% -5%, rgba(45, 212, 191, 0.05), transparent);
+  background-attachment: fixed;
+  color: var(--color-foam);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -26,21 +53,93 @@ body {
   user-select: none;
 }
 
-.glass-card {
-  background: rgba(6, 22, 19, 0.6);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(87, 241, 219, 0.15);
-  transition: border-color 0.3s ease, transform 0.3s ease;
+/* ---------------------------------------------------------------------------
+   Shared components
+--------------------------------------------------------------------------- */
+/* Small uppercase mono label — the app's signature secondary type style */
+@utility mono-caps {
+  @apply font-mono text-[11px] tracking-widest uppercase;
 }
 
-.glass-card:hover {
-  border-color: rgba(87, 241, 219, 0.4);
-  transform: translateY(-4px);
+@layer components {
+  /* Solid aqua call-to-action */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-1.5 bg-aqua text-aqua-deep font-bold
+      hover:brightness-110 active:scale-95 transition-all disabled:opacity-50;
+  }
+
+  /* Quiet bordered button */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-1.5 bg-ink/25 border border-line/50
+      text-subtle hover:text-foam transition-colors;
+  }
+
+  /* Filter / sort chip */
+  .pill {
+    @apply shrink-0 rounded-full mono-caps font-medium px-4 py-1.5 transition-colors;
+  }
+  .pill-active {
+    @apply bg-aqua-bright text-aqua-deep;
+  }
+  .pill-idle {
+    @apply bg-ink/40 text-mist hover:text-foam;
+  }
+
+  /* Text input / select / textarea */
+  .input-field {
+    @apply w-full bg-abyss text-foam placeholder:text-subtle/60 rounded-xl px-4 py-2.5 text-sm
+      outline-none border border-line/50 focus:border-aqua/40 focus:ring-1 focus:ring-aqua transition-all;
+  }
+
+  .field-label {
+    @apply block font-mono text-[11px] tracking-widest uppercase text-subtle mb-1.5;
+  }
+
+  /* Raised panel on the abyss background */
+  .surface {
+    @apply bg-ink/25 border border-line/50;
+  }
+
+  /* Aqua data chip (flora, fauna, tags) */
+  .tag {
+    @apply inline-flex items-center gap-1 font-mono text-[11px] text-aqua rounded-full px-2.5 py-0.5
+      bg-aqua/10 border border-aqua/25;
+  }
+  .tag-amber {
+    @apply inline-flex items-center gap-1 font-mono text-[11px] text-amber rounded-full px-2.5 py-0.5
+      bg-amber/10 border border-amber/25;
+  }
+
+  /* Error notice */
+  .error-note {
+    @apply text-red-400 text-sm rounded-xl px-4 py-2.5 bg-red-500/10 border border-red-500/20;
+  }
+
+  /* Frosted sticky bar (navbar, filter bar, bottom nav) */
+  .frost {
+    background: rgba(6, 22, 19, 0.82);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
 }
 
-.scrim-gradient {
-  background: linear-gradient(to top, rgba(6, 22, 19, 0.92) 0%, transparent 100%);
+@layer components {
+  .glass-card {
+    background: rgba(6, 22, 19, 0.6);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(87, 241, 219, 0.15);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .glass-card:hover {
+    border-color: rgba(87, 241, 219, 0.4);
+    transform: translateY(-4px);
+  }
+
+  .scrim-gradient {
+    background: linear-gradient(to top, rgba(6, 22, 19, 0.92) 0%, transparent 100%);
+  }
 }
 
 ::-webkit-scrollbar { width: 6px; }
@@ -61,5 +160,30 @@ body {
   width: 40%; height: 100%;
   background: linear-gradient(90deg, transparent, rgba(87, 241, 219, 0.3), transparent);
   animation: waterShimmer 1.8s ease infinite;
+  pointer-events: none;
+}
+
+@keyframes fadeRise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-rise {
+  animation: fadeRise 0.45s ease both;
+}
+
+@keyframes bubbleFloat {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 0.5; }
+  85% { opacity: 0.5; }
+  100% { transform: translateY(-120px); opacity: 0; }
+}
+
+.bubble {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(87, 241, 219, 0.35);
+  animation: bubbleFloat 6s ease-in infinite;
   pointer-events: none;
 }

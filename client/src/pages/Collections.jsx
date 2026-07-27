@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import CollectionCard from '../components/CollectionCard';
 
 export default function Collections() {
   const { currentUser } = useAuth();
@@ -46,35 +47,22 @@ export default function Collections() {
     } catch { /* ignore */ }
   };
 
-  const surfaceStyle = {
-    background: 'rgba(40,56,52,0.25)',
-    border: '1px solid rgba(60,74,70,0.5)',
-  };
-
-  const inputClass =
-    'w-full bg-[#061613] text-[#d4e6e1] placeholder:text-[#859490]/60 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-1 focus:ring-[#57f1db] transition-all';
-
   if (loading) return (
     <div className="max-w-4xl mx-auto px-10 py-10">
-      <div className="rounded-2xl animate-pulse h-32" style={{ background: 'rgba(40,56,52,0.3)' }} />
+      <div className="rounded-2xl animate-pulse h-32 bg-ink/30" />
     </div>
   );
 
   return (
-    <div className="max-w-4xl mx-auto px-10 py-8">
+    <div className="max-w-4xl mx-auto px-6 md:px-10 py-8 fade-rise">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <p className="text-[#859490] text-[11px] tracking-widest uppercase mb-1" style={{ fontFamily: 'JetBrains Mono' }}>
-            Your library
-          </p>
-          <h1 className="text-2xl font-bold text-[#d4e6e1]" style={{ fontFamily: 'Manrope' }}>
-            Collections
-          </h1>
+          <p className="mono-caps text-subtle mb-1">Your library</p>
+          <h1 className="text-2xl font-bold text-foam">Collections</h1>
         </div>
         <button
           onClick={() => setCreating((v) => !v)}
-          className="flex items-center gap-2 bg-[#57f1db] text-[#003731] px-5 py-2.5 rounded-xl text-[11px] tracking-widest uppercase font-bold hover:brightness-110 active:scale-95 transition-all"
-          style={{ fontFamily: 'JetBrains Mono' }}
+          className="btn-primary mono-caps rounded-xl px-5 py-2.5"
         >
           <span className="material-symbols-outlined text-[18px]">add</span>
           New
@@ -82,50 +70,39 @@ export default function Collections() {
       </div>
 
       {creating && (
-        <form
-          onSubmit={handleCreate}
-          className="rounded-2xl p-5 mb-6 space-y-3"
-          style={surfaceStyle}
-        >
+        <form onSubmit={handleCreate} className="surface rounded-2xl p-5 mb-6 space-y-3">
           <input
             type="text"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             placeholder="Collection name"
             autoFocus
-            className={inputClass}
-            style={{ border: '1px solid rgba(60,74,70,0.5)' }}
+            className="input-field"
           />
           <input
             type="text"
             value={newDesc}
             onChange={(e) => setNewDesc(e.target.value)}
             placeholder="Description (optional)"
-            className={inputClass}
-            style={{ border: '1px solid rgba(60,74,70,0.5)' }}
+            className="input-field"
           />
-          <label className="flex items-center gap-2.5 text-sm text-[#bacac5] cursor-pointer">
+          <label className="flex items-center gap-2.5 cursor-pointer">
             <input
               type="checkbox"
               checked={newPublic}
               onChange={(e) => setNewPublic(e.target.checked)}
-              className="accent-[#57f1db] w-4 h-4"
+              className="accent-aqua w-4 h-4"
             />
-            <span className="text-[11px] tracking-widest uppercase" style={{ fontFamily: 'JetBrains Mono' }}>Public</span>
+            <span className="mono-caps text-mist">Public</span>
           </label>
           <div className="flex gap-2 pt-1">
-            <button
-              type="submit"
-              className="bg-[#57f1db] text-[#003731] px-5 py-2 rounded-xl text-[11px] tracking-widest uppercase font-bold hover:brightness-110 active:scale-95 transition-all"
-              style={{ fontFamily: 'JetBrains Mono' }}
-            >
+            <button type="submit" className="btn-primary mono-caps rounded-xl px-5 py-2">
               Create
             </button>
             <button
               type="button"
               onClick={() => setCreating(false)}
-              className="px-4 py-2 rounded-xl text-[11px] tracking-widest uppercase text-[#859490] hover:text-[#d4e6e1] transition-colors"
-              style={{ fontFamily: 'JetBrains Mono' }}
+              className="mono-caps px-4 py-2 rounded-xl text-subtle hover:text-foam transition-colors"
             >
               Cancel
             </button>
@@ -135,46 +112,15 @@ export default function Collections() {
 
       {collections.length === 0 ? (
         <div className="text-center py-24">
-          <span className="material-symbols-outlined text-[#283834] text-7xl block mb-4">bookmarks</span>
-          <p className="text-[#859490] text-sm" style={{ fontFamily: 'JetBrains Mono' }}>
+          <span className="material-symbols-outlined text-ink text-7xl block mb-4">bookmarks</span>
+          <p className="font-mono text-subtle text-sm">
             No collections yet. Create one to start saving pins.
           </p>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
           {collections.map((c) => (
-            <div
-              key={c._id}
-              className="rounded-2xl overflow-hidden group transition-all hover:-translate-y-1"
-              style={surfaceStyle}
-            >
-              {c.pins[0]?.imageUrl ? (
-                <img src={c.pins[0].imageUrl} alt={c.name} className="w-full h-36 object-cover" />
-              ) : (
-                <div className="h-36 flex items-center justify-center" style={{ background: 'rgba(40,56,52,0.4)' }}>
-                  <span className="material-symbols-outlined text-[#3c4a46] text-5xl">collections</span>
-                </div>
-              )}
-              <div className="p-3">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <p className="text-[#d4e6e1] font-bold text-sm" style={{ fontFamily: 'Manrope' }}>{c.name}</p>
-                    {c.description && (
-                      <p className="text-[#859490] text-xs mt-0.5">{c.description}</p>
-                    )}
-                    <p className="text-[#57f1db] text-[11px] mt-1" style={{ fontFamily: 'JetBrains Mono' }}>
-                      {c.pins.length} pins · {c.isPublic ? 'Public' : 'Private'}
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => handleDelete(c._id)}
-                    className="text-[#3c4a46] hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all shrink-0 mt-0.5"
-                  >
-                    <span className="material-symbols-outlined text-[18px]">delete</span>
-                  </button>
-                </div>
-              </div>
-            </div>
+            <CollectionCard key={c._id} collection={c} onDelete={handleDelete} />
           ))}
         </div>
       )}

@@ -1,9 +1,6 @@
-export default function TagBadge({ label }) {
+export default function TagBadge({ label, variant = 'aqua' }) {
   return (
-    <span
-      className="inline-block text-[#57f1db] text-[11px] rounded-full px-2.5 py-0.5"
-      style={{ background: 'rgba(87,241,219,0.1)', border: '1px solid rgba(87,241,219,0.25)', fontFamily: 'JetBrains Mono' }}
-    >
+    <span className={variant === 'amber' ? 'tag-amber' : 'tag'}>
       {label}
     </span>
   );

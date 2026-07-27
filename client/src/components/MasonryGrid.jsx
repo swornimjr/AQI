@@ -3,8 +3,11 @@ import PinCard from './PinCard';
 export default function MasonryGrid({ pins, onSaveChange }) {
   if (!pins.length) {
     return (
-      <div className="flex items-center justify-center py-24">
-        <p className="text-[#859490] text-sm" style={{ fontFamily: 'JetBrains Mono' }}>
+      <div className="flex flex-col items-center justify-center py-24 gap-4">
+        <span className="material-symbols-outlined text-ink" style={{ fontSize: '64px' }}>
+          water
+        </span>
+        <p className="font-mono text-subtle text-sm">
           No pins found. Try adjusting your filters.
         </p>
       </div>
