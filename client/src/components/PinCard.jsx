@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { Avatar } from './Navbar';
 
 export default function PinCard({ pin, onSaveChange }) {
   const [saving, setSaving] = useState(false);
@@ -31,7 +32,7 @@ export default function PinCard({ pin, onSaveChange }) {
       <img
         src={pin.imageUrl}
         alt={pin.title}
-        className="w-full block object-cover"
+        className="w-full block object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
         loading="lazy"
       />
 
@@ -41,36 +42,25 @@ export default function PinCard({ pin, onSaveChange }) {
         <div className="absolute top-4 right-4 z-10">
           <button
             onClick={handleSave}
-            className="bg-[#57f1db] text-[#003731] px-5 py-2 rounded-full font-bold text-sm shadow-lg hover:brightness-110 active:scale-95 transition-all translate-y-1 group-hover:translate-y-0"
-            style={{ fontFamily: 'Manrope' }}
+            className="btn-primary rounded-full px-5 py-2 text-sm shadow-lg translate-y-1 group-hover:translate-y-0"
           >
             {saving ? '…' : 'Save'}
           </button>
         </div>
 
         {/* Bottom scrim */}
-        <div className="absolute bottom-0 left-0 right-0 scrim-gradient" style={{ padding: '48px 16px 16px' }}>
+        <div className="absolute bottom-0 left-0 right-0 scrim-gradient px-4 pt-12 pb-4">
           <div className="flex items-center gap-2 mb-2">
-            {pin.creator?.avatar ? (
-              <img
-                src={pin.creator.avatar}
-                alt={pin.creator.username}
-                className="w-7 h-7 rounded-full object-cover shrink-0 border border-[#57f1db]/30"
-              />
-            ) : (
-              <div className="w-7 h-7 rounded-full bg-[#283834] flex items-center justify-center text-[#57f1db] text-[10px] font-bold shrink-0">
-                {pin.creator?.username?.[0]?.toUpperCase()}
-              </div>
-            )}
-            <span className="text-[#d4e6e1] text-[11px]" style={{ fontFamily: 'JetBrains Mono' }}>
+            <Avatar user={pin.creator} size="w-7 h-7" textSize="text-[10px]" />
+            <span className="font-mono text-foam text-[11px]">
               Pin by {pin.creator?.username}
             </span>
           </div>
-          <p className="text-white text-sm font-bold leading-snug" style={{ fontFamily: 'Manrope' }}>
+          <p className="text-white text-sm font-bold leading-snug">
             {pin.title}
           </p>
           {pin.saves > 0 && (
-            <p className="text-[#57f1db] text-[11px] mt-1" style={{ fontFamily: 'JetBrains Mono' }}>
+            <p className="font-mono text-aqua text-[11px] mt-1">
               {pin.saves} saves
             </p>
           )}

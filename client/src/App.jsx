@@ -14,10 +14,7 @@ function BottomNav() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav
-      className="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center pt-2 pb-4 px-2 md:hidden border-t border-[#3c4a46]/20"
-      style={{ background: 'rgba(3,17,14,0.92)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)' }}
-    >
+    <nav className="frost fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center pt-2 pb-4 px-2 md:hidden border-t border-line/20">
       {[
         { to: '/', icon: 'home', label: 'Home' },
         { to: '/auth', icon: 'search', label: 'Search' },
@@ -28,11 +25,11 @@ function BottomNav() {
           key={to}
           to={to}
           className={`flex flex-col items-center gap-0.5 px-4 py-1 rounded-xl transition-all ${
-            isActive(to) ? 'text-[#57f1db] bg-[#2dd4bf]/10' : 'text-[#bacac5] hover:text-[#57f1db]'
+            isActive(to) ? 'text-aqua bg-aqua-bright/10' : 'text-mist hover:text-aqua'
           }`}
         >
           <span className="material-symbols-outlined text-[22px]">{icon}</span>
-          <span className="text-[10px] tracking-widest uppercase" style={{ fontFamily: 'JetBrains Mono' }}>{label}</span>
+          <span className="font-mono text-[10px] tracking-widest uppercase">{label}</span>
         </Link>
       ))}
     </nav>

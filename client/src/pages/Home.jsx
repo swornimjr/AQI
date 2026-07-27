@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import MasonryGrid from '../components/MasonryGrid';
+import { useAuth } from '../context/AuthContext';
 
 const STYLES = ['Nature Aquarium', 'Iwagumi', 'Dutch', 'Biotope', 'Jungle', 'Paludarium', 'Blackwater'];
 const SORT_OPTIONS = [
@@ -9,7 +11,48 @@ const SORT_OPTIONS = [
   { value: 'trending', label: 'Trending' },
 ];
 
+const BUBBLES = [
+  { left: '8%', size: 8, delay: '0s' },
+  { left: '22%', size: 5, delay: '2.1s' },
+  { left: '47%', size: 10, delay: '0.8s' },
+  { left: '68%', size: 6, delay: '3.2s' },
+  { left: '86%', size: 8, delay: '1.5s' },
+];
+
+function Hero() {
+  return (
+    <section className="relative overflow-hidden border-b border-line/20 bg-gradient-to-b from-aqua/8 via-transparent to-transparent">
+      {BUBBLES.map((b, i) => (
+        <span
+          key={i}
+          className="bubble"
+          style={{ left: b.left, width: b.size, height: b.size, animationDelay: b.delay }}
+        />
+      ))}
+      <div className="max-w-3xl mx-auto px-6 py-16 md:py-24 text-center fade-rise">
+        <p className="mono-caps text-aqua mb-4">Underwater worlds, curated</p>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-foam leading-tight tracking-tight mb-4">
+          Find your next <span className="text-aqua">aquascape</span>
+        </h1>
+        <p className="text-mist text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-8">
+          Browse Iwagumi layouts, Dutch jungles and blackwater biotopes from
+          aquascapers around the world — then share your own tank.
+        </p>
+        <div className="flex items-center justify-center gap-3">
+          <Link to="/auth" className="btn-primary mono-caps rounded-full px-7 py-3">
+            Join the community
+          </Link>
+          <a href="#explore" className="btn-ghost mono-caps rounded-full px-7 py-3">
+            Explore
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home({ searchValue }) {
+  const { currentUser } = useAuth();
   const [pins, setPins] = useState([]);
   const [activeStyle, setActiveStyle] = useState('');
   const [sort, setSort] = useState('latest');
@@ -43,35 +86,20 @@ export default function Home({ searchValue }) {
 
   return (
     <div>
+      {!currentUser && !searchValue && <Hero />}
+
       {/* Filter bar */}
       <section
-        className="sticky top-[64px] z-40 flex items-center gap-3 py-3 overflow-x-auto border-b border-[#3c4a46]/10"
-        style={{ paddingLeft: 48, paddingRight: 48, background: 'rgba(6,22,19,0.7)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
+        id="explore"
+        className="frost sticky top-16 z-40 flex items-center gap-3 py-3 px-6 lg:px-12 overflow-x-auto border-b border-line/10 scroll-mt-16"
       >
-        <button
-          onClick={() => setActiveStyle('')}
-          className={`shrink-0 rounded-full text-[11px] tracking-widest uppercase transition-colors font-medium ${
-            activeStyle === ''
-              ? 'bg-[#2dd4bf] text-[#00574d]'
-              : 'text-[#bacac5] hover:text-[#d4e6e1]'
-          }`}
-          style={{ fontFamily: 'JetBrains Mono', background: activeStyle === '' ? undefined : 'rgba(40,56,52,0.4)', padding: '6px 16px' }}
-        >
-          All
-        </button>
-
-        {STYLES.map((s) => (
+        {['', ...STYLES].map((s) => (
           <button
-            key={s}
+            key={s || 'all'}
             onClick={() => setActiveStyle(activeStyle === s ? '' : s)}
-            className={`shrink-0 rounded-full text-[11px] tracking-widest uppercase transition-colors font-medium ${
-              activeStyle === s
-                ? 'bg-[#2dd4bf] text-[#00574d]'
-                : 'text-[#bacac5] hover:text-[#d4e6e1]'
-            }`}
-            style={{ fontFamily: 'JetBrains Mono', background: activeStyle === s ? undefined : 'rgba(40,56,52,0.4)', padding: '6px 16px' }}
+            className={`pill ${activeStyle === s ? 'pill-active' : 'pill-idle'}`}
           >
-            {s}
+            {s || 'All'}
           </button>
         ))}
 
@@ -79,25 +107,20 @@ export default function Home({ searchValue }) {
         <div className="ml-auto shrink-0 relative">
           <button
             onClick={() => setSortOpen((v) => !v)}
-            className="flex items-center gap-1.5 rounded-full text-[11px] tracking-widest uppercase text-[#d4e6e1] transition-colors"
-            style={{ fontFamily: 'JetBrains Mono', background: 'rgba(40,56,52,0.4)', padding: '6px 16px' }}
+            className="pill pill-idle flex items-center gap-1.5 text-foam"
           >
             {currentSortLabel}
             <span className="material-symbols-outlined text-[16px]">expand_more</span>
           </button>
           {sortOpen && (
-            <div
-              className="absolute right-0 top-full mt-1 rounded-xl overflow-hidden shadow-xl z-50 min-w-[130px] border border-[#3c4a46]/40"
-              style={{ background: '#13221f' }}
-            >
+            <div className="absolute right-0 top-full mt-1 rounded-xl overflow-hidden shadow-xl z-50 min-w-[130px] bg-surface border border-line/40">
               {SORT_OPTIONS.map((o) => (
                 <button
                   key={o.value}
                   onClick={() => { setSort(o.value); setSortOpen(false); }}
-                  className={`w-full text-left px-4 py-2.5 text-[11px] tracking-widest uppercase transition-colors ${
-                    sort === o.value ? 'text-[#57f1db]' : 'text-[#bacac5] hover:text-[#d4e6e1] hover:bg-[#283834]/50'
+                  className={`mono-caps w-full text-left px-4 py-2.5 transition-colors ${
+                    sort === o.value ? 'text-aqua' : 'text-mist hover:text-foam hover:bg-ink/50'
                   }`}
-                  style={{ fontFamily: 'JetBrains Mono' }}
                 >
                   {o.label}
                 </button>
@@ -108,10 +131,10 @@ export default function Home({ searchValue }) {
       </section>
 
       {/* Content */}
-      <div style={{ paddingLeft: 48, paddingRight: 48, paddingTop: 40, paddingBottom: 48 }}>
+      <div className="px-6 lg:px-12 pt-10 pb-12">
         {searchValue && (
-          <p className="text-[#859490] text-sm mb-6">
-            Results for <span className="text-[#57f1db]">"{searchValue}"</span>
+          <p className="text-subtle text-sm mb-6">
+            Results for <span className="text-aqua">"{searchValue}"</span>
           </p>
         )}
 
@@ -120,18 +143,16 @@ export default function Home({ searchValue }) {
             {Array.from({ length: 15 }).map((_, i) => (
               <div key={i} className="break-inside-avoid mb-4">
                 <div
-                  className="rounded-xl animate-pulse"
-                  style={{
-                    height: `${180 + (i % 5) * 60}px`,
-                    background: 'rgba(40,56,52,0.4)',
-                    border: '1px solid rgba(87,241,219,0.08)',
-                  }}
+                  className="rounded-xl animate-pulse bg-ink/40 border border-aqua/8"
+                  style={{ height: `${180 + (i % 5) * 60}px` }}
                 />
               </div>
             ))}
           </div>
         ) : (
-          <MasonryGrid pins={pins} onSaveChange={handleSaveChange} />
+          <div className="fade-rise">
+            <MasonryGrid pins={pins} onSaveChange={handleSaveChange} />
+          </div>
         )}
       </div>
     </div>
