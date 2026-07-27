@@ -41,7 +41,7 @@ export default function Profile() {
 
   if (!user) return (
     <div className="flex items-center justify-center py-24">
-      <p className="font-mono text-fog">User not found.</p>
+      <p className="text-fog text-sm">User not found.</p>
     </div>
   );
 
@@ -67,7 +67,7 @@ export default function Profile() {
           )}
           {user.currentTanks && (
             <p className="text-sm">
-              <span className="mono-caps text-fog">Current tanks: </span>
+              <span className="text-[13px] text-fog">Current tanks: </span>
               <span className="text-ink">{user.currentTanks}</span>
             </p>
           )}
@@ -79,7 +79,7 @@ export default function Profile() {
             ].map(({ label, value }) => (
               <div key={label} className="text-center">
                 <p className="text-ink font-bold text-lg leading-none">{value}</p>
-                <p className="font-mono text-fog text-[10px] tracking-widest uppercase mt-0.5">{label}</p>
+                <p className="text-fog text-xs capitalize mt-0.5">{label}</p>
               </div>
             ))}
           </div>
@@ -92,7 +92,7 @@ export default function Profile() {
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`mono-caps px-6 py-2 rounded-lg font-bold transition-all ${
+            className={`px-6 py-2 rounded-lg text-sm font-semibold capitalize transition-all ${
               tab === t
                 ? 'bg-kelp text-white'
                 : 'text-fog hover:text-ink'
@@ -108,7 +108,7 @@ export default function Profile() {
       {tab === 'collections' && (
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
           {collections.length === 0 && (
-            <p className="font-mono text-fog text-sm col-span-full py-12 text-center">
+            <p className="text-fog text-sm col-span-full py-12 text-center">
               No public collections yet.
             </p>
           )}

@@ -9,8 +9,8 @@ function MetaRow({ label, value }) {
   if (!value) return null;
   return (
     <div className="flex gap-3 text-sm">
-      <span className="mono-caps text-fog w-28 shrink-0">{label}</span>
-      <span className="text-ink">{value}</span>
+      <span className="text-[13px] text-fog w-28 shrink-0">{label}</span>
+      <span className="font-mono text-[13px] text-ink">{value}</span>
     </div>
   );
 }
@@ -19,7 +19,7 @@ function TagSection({ title, items, variant }) {
   if (!items?.length) return null;
   return (
     <div>
-      <h3 className="mono-caps text-fog mb-2">{title}</h3>
+      <h3 className="text-[13px] font-semibold text-dim mb-2">{title}</h3>
       <div className="flex flex-wrap gap-1.5">
         {items.map((item) => <TagBadge key={item} label={item} variant={variant} />)}
       </div>
@@ -83,7 +83,7 @@ export default function PinDetail() {
 
   if (!pin) return null;
 
-  const isCreator = currentUser?._id === pin.creator?._id;
+  const isCreator = !!currentUser && currentUser._id === pin.creator?._id;
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 fade-rise">
@@ -103,17 +103,17 @@ export default function PinDetail() {
             <div className="flex gap-2 shrink-0">
               <button
                 onClick={handleSave}
-                className={`mono-caps font-bold rounded-xl px-4 py-2 ${
+                className={`rounded-full px-4 py-2 ${
                   saved ? 'btn-ghost text-kelp' : 'btn-primary'
                 }`}
               >
                 <span className="material-symbols-outlined text-[16px]">{saved ? 'bookmark' : 'bookmark_border'}</span>
-                {pin.saves} {saved ? 'Saved' : 'Save'}
+                {saved ? 'Saved' : 'Save'}{pin.saves > 0 && ` · ${pin.saves}`}
               </button>
               {isCreator && (
                 <button
                   onClick={handleDelete}
-                  className="btn-ghost mono-caps rounded-xl px-4 py-2 hover:text-red-600 hover:border-red-200"
+                  className="btn-ghost rounded-full px-4 py-2 hover:text-red-600 hover:border-red-200"
                 >
                   Delete
                 </button>
@@ -128,7 +128,7 @@ export default function PinDetail() {
               <p className="text-ink text-sm font-bold group-hover:text-kelp transition-colors">
                 {pin.creator?.username}
               </p>
-              <p className="font-mono text-fog text-[11px]">Aquascaper</p>
+              <p className="text-xs text-fog">Aquascaper</p>
             </div>
           </Link>
 
@@ -156,7 +156,7 @@ export default function PinDetail() {
       <div className="mt-10 max-w-2xl">
         <h2 className="text-ink font-bold mb-5">
           Comments
-          <span className="font-mono ml-2 text-fog text-sm font-normal">
+          <span className="ml-2 text-fog text-sm font-normal">
             {pin.comments?.length || 0}
           </span>
         </h2>
@@ -173,7 +173,7 @@ export default function PinDetail() {
             <button
               type="submit"
               disabled={submitting || !comment.trim()}
-              className="btn-primary mono-caps rounded-xl px-5 py-2.5"
+              className="btn-primary rounded-xl px-5 py-2.5"
             >
               Post
             </button>
@@ -185,7 +185,7 @@ export default function PinDetail() {
             <div key={i} className="flex gap-3">
               <Avatar user={c.user} size="w-8 h-8" textSize="text-xs" />
               <div className="pt-0.5">
-                <span className="font-mono text-ink text-[11px] font-bold tracking-wide">
+                <span className="text-ink text-xs font-bold">
                   {c.user?.username}
                 </span>
                 <p className="text-dim text-sm mt-0.5 leading-relaxed">{c.text}</p>

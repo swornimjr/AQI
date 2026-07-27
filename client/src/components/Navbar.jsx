@@ -68,20 +68,9 @@ export default function Navbar({ searchValue, onSearch }) {
         <Link to="/" className="flex items-center gap-2.5">
           <AquascapeLogo />
           <span className="text-[15px] font-bold tracking-tight text-ink leading-none hidden lg:block">
-            AQUASCAPE INSPIRE
+            AquaScape Inspire
           </span>
         </Link>
-        <nav className="hidden md:flex gap-6 items-center">
-          <Link
-            to="/"
-            className="mono-caps flex items-center text-kelp font-bold border-b-2 border-kelp pb-0.5 leading-none"
-          >
-            Explore
-          </Link>
-          <span className="mono-caps flex items-center text-dim hover:text-ink transition-colors cursor-pointer leading-none">
-            Community
-          </span>
-        </nav>
       </div>
 
       {/* Search */}
@@ -107,27 +96,21 @@ export default function Navbar({ searchValue, onSearch }) {
       <div className="flex items-center gap-3 shrink-0">
         {currentUser ? (
           <>
-            <Link to="/upload" className="btn-primary mono-caps hidden lg:inline-flex rounded-full px-4.5 py-2.5 leading-none">
+            <Link to="/upload" className="btn-primary hidden lg:inline-flex rounded-full px-4 py-2">
               Create
             </Link>
-            <span
-              className="material-symbols-outlined hidden md:flex items-center justify-center text-dim hover:text-ink cursor-pointer transition-colors"
-              style={{ fontSize: '22px' }}
-            >
-              notifications
-            </span>
             <Link to={`/profile/${currentUser.username}`} className="flex items-center">
               <Avatar user={currentUser} />
             </Link>
             <button
               onClick={handleLogout}
-              className="mono-caps hidden lg:inline-flex items-center text-fog hover:text-ink transition-colors leading-none"
+              className="hidden lg:inline-flex items-center text-sm font-medium text-fog hover:text-ink transition-colors"
             >
               Logout
             </button>
           </>
         ) : (
-          <Link to="/auth" className="btn-primary mono-caps rounded-full px-5 py-2.5 leading-none">
+          <Link to="/auth" className="btn-primary rounded-full px-4 py-2">
             Sign In
           </Link>
         )}

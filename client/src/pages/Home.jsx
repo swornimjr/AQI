@@ -11,41 +11,20 @@ const SORT_OPTIONS = [
   { value: 'trending', label: 'Trending' },
 ];
 
-const BUBBLES = [
-  { left: '8%', size: 8, delay: '0s' },
-  { left: '22%', size: 5, delay: '2.1s' },
-  { left: '47%', size: 10, delay: '0.8s' },
-  { left: '68%', size: 6, delay: '3.2s' },
-  { left: '86%', size: 8, delay: '1.5s' },
-];
-
 function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-line bg-gradient-to-b from-kelp-tint/70 via-page to-page">
-      {BUBBLES.map((b, i) => (
-        <span
-          key={i}
-          className="bubble"
-          style={{ left: b.left, width: b.size, height: b.size, animationDelay: b.delay }}
-        />
-      ))}
-      <div className="max-w-3xl mx-auto px-6 py-16 md:py-24 text-center fade-rise">
-        <p className="mono-caps text-kelp mb-4">Underwater worlds, curated</p>
-        <h1 className="text-4xl md:text-5xl font-extrabold text-ink leading-tight tracking-tight mb-4">
-          Find your next <span className="text-kelp">aquascape</span>
+    <section className="px-6 lg:px-12 pt-12 pb-10">
+      <div className="max-w-xl fade-rise">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-ink tracking-tight leading-tight mb-3">
+          Find your next aquascape
         </h1>
-        <p className="text-dim text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-8">
+        <p className="text-dim text-base leading-relaxed mb-6">
           Browse Iwagumi layouts, Dutch jungles and blackwater biotopes from
           aquascapers around the world — then share your own tank.
         </p>
-        <div className="flex items-center justify-center gap-3">
-          <Link to="/auth" className="btn-primary mono-caps rounded-full px-7 py-3">
-            Join the community
-          </Link>
-          <a href="#explore" className="btn-ghost mono-caps rounded-full px-7 py-3">
-            Explore
-          </a>
-        </div>
+        <Link to="/auth" className="btn-primary rounded-full px-5 py-2.5">
+          Join the community
+        </Link>
       </div>
     </section>
   );
@@ -89,10 +68,7 @@ export default function Home({ searchValue }) {
       {!currentUser && !searchValue && <Hero />}
 
       {/* Filter bar */}
-      <section
-        id="explore"
-        className="frost sticky top-16 z-40 flex items-center gap-3 py-3 px-6 lg:px-12 overflow-x-auto border-b border-line scroll-mt-16"
-      >
+      <section className="frost sticky top-16 z-40 flex items-center gap-3 py-3 px-6 lg:px-12 overflow-x-auto border-b border-line">
         {['', ...STYLES].map((s) => (
           <button
             key={s || 'all'}
@@ -118,8 +94,8 @@ export default function Home({ searchValue }) {
                 <button
                   key={o.value}
                   onClick={() => { setSort(o.value); setSortOpen(false); }}
-                  className={`mono-caps w-full text-left px-4 py-2.5 transition-colors ${
-                    sort === o.value ? 'text-kelp font-bold' : 'text-dim hover:text-ink hover:bg-fill'
+                  className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
+                    sort === o.value ? 'text-kelp font-semibold' : 'text-dim hover:text-ink hover:bg-fill'
                   }`}
                 >
                   {o.label}

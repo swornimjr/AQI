@@ -39,7 +39,7 @@ export default function Auth() {
           <div className="flex justify-center mb-3">
             <AquascapeLogo width={56} height={45} />
           </div>
-          <p className="mono-caps text-fog mb-1">
+          <p className="text-sm text-fog mb-1">
             {tab === 'login' ? 'Welcome back' : 'Join the community'}
           </p>
           <h1 className="text-2xl font-bold text-ink">
@@ -53,7 +53,7 @@ export default function Auth() {
             <button
               key={t}
               onClick={() => { setTab(t); setError(''); }}
-              className={`mono-caps flex-1 py-2.5 rounded-lg font-bold transition-all ${
+              className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                 tab === t
                   ? 'bg-card text-ink shadow-sm'
                   : 'text-fog hover:text-ink'
@@ -109,7 +109,7 @@ export default function Auth() {
           <button
             type="submit"
             disabled={loading}
-            className="btn-primary mono-caps w-full py-3 rounded-xl mt-2 active:scale-[0.98]"
+            className="btn-primary w-full py-3 rounded-xl mt-2"
           >
             {loading ? 'Please wait…' : tab === 'login' ? 'Sign In' : 'Create Account'}
           </button>
