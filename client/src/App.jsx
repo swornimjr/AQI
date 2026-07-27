@@ -53,7 +53,7 @@ function Layout() {
       <Navbar searchValue={isHome ? search : ''} onSearch={setSearch} />
       <main className="pb-20 md:pb-0">
         <Routes>
-          <Route path="/" element={<Home searchValue={search} />} />
+          <Route path="/" element={<Home searchValue={search} onSearch={setSearch} />} />
           <Route path="/pin/:id" element={<PinDetail />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/profile/:username" element={<Profile />} />

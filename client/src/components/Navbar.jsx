@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import SearchBar from './SearchBar';
 
 export function AquascapeLogo({ width = 42, height = 34 }) {
   return (
@@ -75,21 +76,7 @@ export default function Navbar({ searchValue, onSearch }) {
 
       {/* Search */}
       <div className="hidden md:flex items-center flex-1 max-w-xl">
-        <div className="relative w-full group">
-          <span
-            className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-fog group-focus-within:text-kelp transition-colors pointer-events-none"
-            style={{ fontSize: '18px', lineHeight: 1 }}
-          >
-            search
-          </span>
-          <input
-            type="text"
-            placeholder="Search tanks, plants, styles..."
-            value={searchValue}
-            onChange={(e) => onSearch?.(e.target.value)}
-            className="w-full rounded-full bg-fill border border-transparent py-2 pl-9 pr-4 text-sm text-ink placeholder:text-fog outline-none focus:bg-card focus:border-line focus:ring-1 focus:ring-kelp/40 transition-all"
-          />
-        </div>
+        <SearchBar value={searchValue} onChange={onSearch} />
       </div>
 
       {/* Actions */}
