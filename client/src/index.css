@@ -55,30 +55,25 @@ body {
   user-select: none;
 }
 
-/* Small uppercase mono label — used sparingly for metadata and eyebrows */
-@utility mono-caps {
-  @apply font-mono text-[11px] tracking-widest uppercase;
-}
-
 /* ---------------------------------------------------------------------------
    Shared components
 --------------------------------------------------------------------------- */
 @layer components {
   /* Solid accent call-to-action */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-1.5 bg-kelp text-white font-bold
+    @apply inline-flex items-center justify-center gap-1.5 bg-kelp text-white text-sm font-semibold
       hover:bg-kelp-deep active:scale-[0.98] transition-all disabled:opacity-50;
   }
 
   /* Quiet bordered button */
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-1.5 bg-card border border-line
-      text-dim hover:text-ink hover:border-fog/60 transition-colors;
+      text-sm font-semibold text-dim hover:text-ink hover:border-fog/60 transition-colors;
   }
 
   /* Filter / sort chip */
   .pill {
-    @apply shrink-0 rounded-full mono-caps font-medium px-4 py-1.5 transition-colors;
+    @apply shrink-0 rounded-full text-[13px] font-medium px-4 py-1.5 whitespace-nowrap transition-colors;
   }
   .pill-active {
     @apply bg-kelp text-white;
@@ -94,7 +89,7 @@ body {
   }
 
   .field-label {
-    @apply block font-mono text-[11px] tracking-widest uppercase text-dim mb-1.5;
+    @apply block text-[13px] font-medium text-dim mb-1.5;
   }
 
   /* Raised panel on the paper background */
@@ -104,11 +99,11 @@ body {
 
   /* Accent data chip (flora, fauna, tags) */
   .tag {
-    @apply inline-flex items-center gap-1 font-mono text-[11px] text-kelp rounded-full px-2.5 py-0.5
+    @apply inline-flex items-center gap-1 text-xs font-medium text-kelp rounded-full px-2.5 py-0.5
       bg-kelp-tint border border-kelp/15;
   }
   .tag-amber {
-    @apply inline-flex items-center gap-1 font-mono text-[11px] text-amber rounded-full px-2.5 py-0.5
+    @apply inline-flex items-center gap-1 text-xs font-medium text-amber rounded-full px-2.5 py-0.5
       bg-amber-tint border border-amber/15;
   }
 
@@ -126,12 +121,7 @@ body {
 
   /* Photo tile — the image is the card; no chrome */
   .photo-card {
-    @apply relative overflow-hidden rounded-xl bg-fill cursor-pointer;
-  }
-
-  /* Dark scrim for text laid over photos */
-  .scrim-gradient {
-    background: linear-gradient(to top, rgba(15, 20, 17, 0.82) 0%, transparent 100%);
+    @apply relative overflow-hidden rounded-xl bg-fill;
   }
 }
 
@@ -147,20 +137,4 @@ body {
 
 .fade-rise {
   animation: fadeRise 0.45s ease both;
-}
-
-@keyframes bubbleFloat {
-  0% { transform: translateY(0); opacity: 0; }
-  15% { opacity: 0.6; }
-  85% { opacity: 0.6; }
-  100% { transform: translateY(-120px); opacity: 0; }
-}
-
-.bubble {
-  position: absolute;
-  bottom: -10px;
-  border-radius: 9999px;
-  border: 1px solid rgba(23, 106, 77, 0.3);
-  animation: bubbleFloat 6s ease-in infinite;
-  pointer-events: none;
 }

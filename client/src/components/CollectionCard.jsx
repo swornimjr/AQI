@@ -15,7 +15,7 @@ export default function CollectionCard({ collection: c, onDelete }) {
             {c.description && (
               <p className="text-fog text-xs mt-0.5">{c.description}</p>
             )}
-            <p className="font-mono text-fog text-[11px] mt-1">
+            <p className="text-fog text-xs mt-1">
               {c.pins.length} pins
               {onDelete && ` · ${c.isPublic ? 'Public' : 'Private'}`}
             </p>

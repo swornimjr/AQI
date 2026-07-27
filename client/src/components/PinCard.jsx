@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { Avatar } from './Navbar';
 
 export default function PinCard({ pin, onSaveChange }) {
   const [saving, setSaving] = useState(false);
@@ -25,46 +24,28 @@ export default function PinCard({ pin, onSaveChange }) {
   };
 
   return (
-    <div
-      className="photo-card group"
-      onClick={() => navigate(`/pin/${pin._id}`)}
-    >
-      <img
-        src={pin.imageUrl}
-        alt={pin.title}
-        className="w-full block object-cover"
-        loading="lazy"
-      />
-
-      {/* Hover overlay */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        {/* Save button */}
-        <div className="absolute top-4 right-4 z-10">
-          <button
-            onClick={handleSave}
-            className="btn-primary rounded-full px-5 py-2 text-sm shadow-lg translate-y-1 group-hover:translate-y-0"
-          >
-            {saving ? '…' : 'Save'}
-          </button>
-        </div>
-
-        {/* Bottom scrim */}
-        <div className="absolute bottom-0 left-0 right-0 scrim-gradient px-4 pt-12 pb-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Avatar user={pin.creator} size="w-7 h-7" textSize="text-[10px]" />
-            <span className="font-mono text-white/90 text-[11px]">
-              Pin by {pin.creator?.username}
-            </span>
-          </div>
-          <p className="text-white text-sm font-bold leading-snug">
-            {pin.title}
-          </p>
-          {pin.saves > 0 && (
-            <p className="font-mono text-white/70 text-[11px] mt-1">
-              {pin.saves} saves
-            </p>
-          )}
-        </div>
+    <div className="group cursor-pointer" onClick={() => navigate(`/pin/${pin._id}`)}>
+      <div className="photo-card">
+        <img
+          src={pin.imageUrl}
+          alt={pin.title}
+          className="w-full block object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/15 transition-colors" />
+        <button
+          onClick={handleSave}
+          className="btn-primary absolute top-3 right-3 rounded-full px-4 py-2 opacity-0 group-hover:opacity-100 shadow-sm"
+        >
+          {saving ? '…' : 'Save'}
+        </button>
+      </div>
+      <div className="pt-2 px-0.5">
+        <p className="text-sm font-semibold text-ink leading-snug truncate">{pin.title}</p>
+        <p className="text-xs text-fog mt-0.5 truncate">
+          {pin.creator?.username}
+          {pin.saves > 0 && ` · ${pin.saves} ${pin.saves === 1 ? 'save' : 'saves'}`}
+        </p>
       </div>
     </div>
   );

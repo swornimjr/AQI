@@ -140,8 +140,8 @@ export default function Upload() {
   return (
     <div className="max-w-3xl mx-auto px-6 md:px-10 py-8 fade-rise">
       <div className="mb-8">
-        <p className="mono-caps text-fog mb-1">Share your work</p>
-        <h1 className="text-2xl font-bold text-ink">Upload Your Aquascape</h1>
+        <h1 className="text-2xl font-bold text-ink">Upload your aquascape</h1>
+        <p className="text-sm text-fog mt-1">Share your tank with the community</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -159,7 +159,7 @@ export default function Upload() {
             <div className="text-center py-12 px-4">
               <span className="material-symbols-outlined text-fog/60 text-6xl block mb-3">add_photo_alternate</span>
               <p className="text-ink text-sm font-bold mb-1">Click or drag image here</p>
-              <p className="mono-caps text-fog">JPG · PNG · WebP · up to 10MB</p>
+              <p className="text-xs text-fog">JPG · PNG · WebP · up to 10 MB</p>
             </div>
           )}
           <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files[0] && handleFile(e.target.files[0])} />
@@ -199,7 +199,7 @@ export default function Upload() {
         <button
           type="submit"
           disabled={loading}
-          className="btn-primary mono-caps w-full py-3.5 rounded-xl active:scale-[0.99]"
+          className="btn-primary w-full py-3.5 rounded-xl"
         >
           {loading ? 'Uploading…' : 'Publish Pin'}
         </button>
