@@ -67,7 +67,7 @@ function TagInput({ label, values, onChange }) {
             <button
               type="button"
               onClick={() => onChange(values.filter((x) => x !== v))}
-              className="text-subtle hover:text-red-400 transition-colors ml-0.5"
+              className="text-fog hover:text-red-600 transition-colors ml-0.5"
             >
               ×
             </button>
@@ -140,8 +140,8 @@ export default function Upload() {
   return (
     <div className="max-w-3xl mx-auto px-6 md:px-10 py-8 fade-rise">
       <div className="mb-8">
-        <p className="mono-caps text-subtle mb-1">Share your work</p>
-        <h1 className="text-2xl font-bold text-foam">Upload Your Aquascape</h1>
+        <p className="mono-caps text-fog mb-1">Share your work</p>
+        <h1 className="text-2xl font-bold text-ink">Upload Your Aquascape</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -151,15 +151,15 @@ export default function Upload() {
           onDrop={handleDrop}
           onDragOver={(e) => e.preventDefault()}
           className={`relative rounded-2xl overflow-hidden cursor-pointer transition-colors min-h-48 flex items-center justify-center
-            border-2 border-dashed bg-ink/15 hover:border-aqua/50 ${preview ? 'border-aqua/40' : 'border-line/60'}`}
+            border-2 border-dashed bg-fill/60 hover:border-kelp/50 ${preview ? 'border-kelp/40' : 'border-line'}`}
         >
           {preview ? (
             <img src={preview} alt="preview" className="w-full object-contain max-h-96" />
           ) : (
             <div className="text-center py-12 px-4">
-              <span className="material-symbols-outlined text-line text-6xl block mb-3">add_photo_alternate</span>
-              <p className="text-mist text-sm font-bold mb-1">Click or drag image here</p>
-              <p className="mono-caps text-subtle">JPG · PNG · WebP · up to 10MB</p>
+              <span className="material-symbols-outlined text-fog/60 text-6xl block mb-3">add_photo_alternate</span>
+              <p className="text-ink text-sm font-bold mb-1">Click or drag image here</p>
+              <p className="mono-caps text-fog">JPG · PNG · WebP · up to 10MB</p>
             </div>
           )}
           <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files[0] && handleFile(e.target.files[0])} />

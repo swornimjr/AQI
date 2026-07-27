@@ -33,30 +33,30 @@ export default function Auth() {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4">
-      <div className="glass-card w-full max-w-md rounded-2xl p-8 fade-rise hover:transform-none">
+      <div className="surface w-full max-w-md rounded-2xl p-8 shadow-sm fade-rise">
         {/* Logo mark */}
         <div className="text-center mb-6">
           <div className="flex justify-center mb-3">
             <AquascapeLogo width={56} height={45} />
           </div>
-          <p className="mono-caps text-subtle mb-1">
+          <p className="mono-caps text-fog mb-1">
             {tab === 'login' ? 'Welcome back' : 'Join the community'}
           </p>
-          <h1 className="text-2xl font-bold text-foam">
+          <h1 className="text-2xl font-bold text-ink">
             AquaScape Inspire
           </h1>
         </div>
 
         {/* Tabs */}
-        <div className="flex mb-6 p-1 rounded-xl bg-ink/40">
+        <div className="flex mb-6 p-1 rounded-xl bg-fill">
           {['login', 'register'].map((t) => (
             <button
               key={t}
               onClick={() => { setTab(t); setError(''); }}
               className={`mono-caps flex-1 py-2.5 rounded-lg font-bold transition-all ${
                 tab === t
-                  ? 'bg-aqua text-aqua-deep shadow-lg'
-                  : 'text-subtle hover:text-foam'
+                  ? 'bg-card text-ink shadow-sm'
+                  : 'text-fog hover:text-ink'
               }`}
             >
               {t === 'login' ? 'Sign In' : 'Register'}

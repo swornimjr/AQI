@@ -26,13 +26,13 @@ export default function PinCard({ pin, onSaveChange }) {
 
   return (
     <div
-      className="relative group overflow-hidden rounded-xl cursor-pointer glass-card"
+      className="photo-card group"
       onClick={() => navigate(`/pin/${pin._id}`)}
     >
       <img
         src={pin.imageUrl}
         alt={pin.title}
-        className="w-full block object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+        className="w-full block object-cover"
         loading="lazy"
       />
 
@@ -52,7 +52,7 @@ export default function PinCard({ pin, onSaveChange }) {
         <div className="absolute bottom-0 left-0 right-0 scrim-gradient px-4 pt-12 pb-4">
           <div className="flex items-center gap-2 mb-2">
             <Avatar user={pin.creator} size="w-7 h-7" textSize="text-[10px]" />
-            <span className="font-mono text-foam text-[11px]">
+            <span className="font-mono text-white/90 text-[11px]">
               Pin by {pin.creator?.username}
             </span>
           </div>
@@ -60,7 +60,7 @@ export default function PinCard({ pin, onSaveChange }) {
             {pin.title}
           </p>
           {pin.saves > 0 && (
-            <p className="font-mono text-aqua text-[11px] mt-1">
+            <p className="font-mono text-white/70 text-[11px] mt-1">
               {pin.saves} saves
             </p>
           )}
