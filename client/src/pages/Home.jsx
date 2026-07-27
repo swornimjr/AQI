@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import MasonryGrid from '../components/MasonryGrid';
+import SearchBar from '../components/SearchBar';
 import { useAuth } from '../context/AuthContext';
 
 const STYLES = ['Nature Aquarium', 'Iwagumi', 'Dutch', 'Biotope', 'Jungle', 'Paludarium', 'Blackwater'];
@@ -30,7 +31,7 @@ function Hero() {
   );
 }
 
-export default function Home({ searchValue }) {
+export default function Home({ searchValue, onSearch }) {
   const { currentUser } = useAuth();
   const [pins, setPins] = useState([]);
   const [activeStyle, setActiveStyle] = useState('');
@@ -67,8 +68,12 @@ export default function Home({ searchValue }) {
     <div>
       {!currentUser && !searchValue && <Hero />}
 
-      {/* Filter bar */}
-      <section className="frost sticky top-16 z-40 flex items-center gap-3 py-3 px-6 lg:px-12 overflow-x-auto border-b border-line">
+      {/* Search (mobile) + filter bar */}
+      <section className="frost sticky top-16 z-40 border-b border-line">
+        <div className="px-6 pt-3 md:hidden">
+          <SearchBar value={searchValue} onChange={onSearch} />
+        </div>
+        <div className="flex items-center gap-3 py-3 px-6 lg:px-12 overflow-x-auto">
         {['', ...STYLES].map((s) => (
           <button
             key={s || 'all'}
@@ -103,6 +108,7 @@ export default function Home({ searchValue }) {
               ))}
             </div>
           )}
+          </div>
         </div>
       </section>
 
