@@ -9,8 +9,8 @@ function MetaRow({ label, value }) {
   if (!value) return null;
   return (
     <div className="flex gap-3 text-sm">
-      <span className="mono-caps text-subtle w-28 shrink-0">{label}</span>
-      <span className="text-foam">{value}</span>
+      <span className="mono-caps text-fog w-28 shrink-0">{label}</span>
+      <span className="text-ink">{value}</span>
     </div>
   );
 }
@@ -19,7 +19,7 @@ function TagSection({ title, items, variant }) {
   if (!items?.length) return null;
   return (
     <div>
-      <h3 className="mono-caps text-subtle mb-2">{title}</h3>
+      <h3 className="mono-caps text-fog mb-2">{title}</h3>
       <div className="flex flex-wrap gap-1.5">
         {items.map((item) => <TagBadge key={item} label={item} variant={variant} />)}
       </div>
@@ -77,7 +77,7 @@ export default function PinDetail() {
 
   if (loading) return (
     <div className="max-w-5xl mx-auto px-10 py-10">
-      <div className="rounded-2xl animate-pulse h-96 bg-ink/30" />
+      <div className="rounded-2xl animate-pulse h-96 bg-fill" />
     </div>
   );
 
@@ -97,14 +97,14 @@ export default function PinDetail() {
         <div className="space-y-5">
           {/* Title + actions */}
           <div className="flex items-start justify-between gap-4">
-            <h1 className="text-2xl font-bold text-foam leading-tight">
+            <h1 className="text-2xl font-bold text-ink leading-tight">
               {pin.title}
             </h1>
             <div className="flex gap-2 shrink-0">
               <button
                 onClick={handleSave}
                 className={`mono-caps font-bold rounded-xl px-4 py-2 ${
-                  saved ? 'btn-ghost text-aqua' : 'btn-primary'
+                  saved ? 'btn-ghost text-kelp' : 'btn-primary'
                 }`}
               >
                 <span className="material-symbols-outlined text-[16px]">{saved ? 'bookmark' : 'bookmark_border'}</span>
@@ -113,7 +113,7 @@ export default function PinDetail() {
               {isCreator && (
                 <button
                   onClick={handleDelete}
-                  className="btn-ghost mono-caps rounded-xl px-4 py-2 hover:text-red-400"
+                  className="btn-ghost mono-caps rounded-xl px-4 py-2 hover:text-red-600 hover:border-red-200"
                 >
                   Delete
                 </button>
@@ -125,15 +125,15 @@ export default function PinDetail() {
           <Link to={`/profile/${pin.creator?.username}`} className="flex items-center gap-3 group w-fit">
             <Avatar user={pin.creator} size="w-9 h-9" />
             <div>
-              <p className="text-foam text-sm font-bold group-hover:text-aqua transition-colors">
+              <p className="text-ink text-sm font-bold group-hover:text-kelp transition-colors">
                 {pin.creator?.username}
               </p>
-              <p className="font-mono text-subtle text-[11px]">Aquascaper</p>
+              <p className="font-mono text-fog text-[11px]">Aquascaper</p>
             </div>
           </Link>
 
           {pin.description && (
-            <p className="text-mist text-sm leading-relaxed">{pin.description}</p>
+            <p className="text-dim text-sm leading-relaxed">{pin.description}</p>
           )}
 
           {/* Metadata table */}
@@ -154,9 +154,9 @@ export default function PinDetail() {
 
       {/* Comments */}
       <div className="mt-10 max-w-2xl">
-        <h2 className="text-foam font-bold mb-5">
+        <h2 className="text-ink font-bold mb-5">
           Comments
-          <span className="font-mono ml-2 text-subtle text-sm font-normal">
+          <span className="font-mono ml-2 text-fog text-sm font-normal">
             {pin.comments?.length || 0}
           </span>
         </h2>
@@ -185,10 +185,10 @@ export default function PinDetail() {
             <div key={i} className="flex gap-3">
               <Avatar user={c.user} size="w-8 h-8" textSize="text-xs" />
               <div className="pt-0.5">
-                <span className="font-mono text-aqua text-[11px] font-bold tracking-wide">
+                <span className="font-mono text-ink text-[11px] font-bold tracking-wide">
                   {c.user?.username}
                 </span>
-                <p className="text-mist text-sm mt-0.5 leading-relaxed">{c.text}</p>
+                <p className="text-dim text-sm mt-0.5 leading-relaxed">{c.text}</p>
               </div>
             </div>
           ))}

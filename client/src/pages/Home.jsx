@@ -21,7 +21,7 @@ const BUBBLES = [
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-line/20 bg-gradient-to-b from-aqua/8 via-transparent to-transparent">
+    <section className="relative overflow-hidden border-b border-line bg-gradient-to-b from-kelp-tint/70 via-page to-page">
       {BUBBLES.map((b, i) => (
         <span
           key={i}
@@ -30,11 +30,11 @@ function Hero() {
         />
       ))}
       <div className="max-w-3xl mx-auto px-6 py-16 md:py-24 text-center fade-rise">
-        <p className="mono-caps text-aqua mb-4">Underwater worlds, curated</p>
-        <h1 className="text-4xl md:text-5xl font-extrabold text-foam leading-tight tracking-tight mb-4">
-          Find your next <span className="text-aqua">aquascape</span>
+        <p className="mono-caps text-kelp mb-4">Underwater worlds, curated</p>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-ink leading-tight tracking-tight mb-4">
+          Find your next <span className="text-kelp">aquascape</span>
         </h1>
-        <p className="text-mist text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-8">
+        <p className="text-dim text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-8">
           Browse Iwagumi layouts, Dutch jungles and blackwater biotopes from
           aquascapers around the world — then share your own tank.
         </p>
@@ -91,7 +91,7 @@ export default function Home({ searchValue }) {
       {/* Filter bar */}
       <section
         id="explore"
-        className="frost sticky top-16 z-40 flex items-center gap-3 py-3 px-6 lg:px-12 overflow-x-auto border-b border-line/10 scroll-mt-16"
+        className="frost sticky top-16 z-40 flex items-center gap-3 py-3 px-6 lg:px-12 overflow-x-auto border-b border-line scroll-mt-16"
       >
         {['', ...STYLES].map((s) => (
           <button
@@ -107,19 +107,19 @@ export default function Home({ searchValue }) {
         <div className="ml-auto shrink-0 relative">
           <button
             onClick={() => setSortOpen((v) => !v)}
-            className="pill pill-idle flex items-center gap-1.5 text-foam"
+            className="pill pill-idle flex items-center gap-1.5 text-ink"
           >
             {currentSortLabel}
             <span className="material-symbols-outlined text-[16px]">expand_more</span>
           </button>
           {sortOpen && (
-            <div className="absolute right-0 top-full mt-1 rounded-xl overflow-hidden shadow-xl z-50 min-w-[130px] bg-surface border border-line/40">
+            <div className="absolute right-0 top-full mt-1 rounded-xl overflow-hidden shadow-lg z-50 min-w-[130px] bg-card border border-line">
               {SORT_OPTIONS.map((o) => (
                 <button
                   key={o.value}
                   onClick={() => { setSort(o.value); setSortOpen(false); }}
                   className={`mono-caps w-full text-left px-4 py-2.5 transition-colors ${
-                    sort === o.value ? 'text-aqua' : 'text-mist hover:text-foam hover:bg-ink/50'
+                    sort === o.value ? 'text-kelp font-bold' : 'text-dim hover:text-ink hover:bg-fill'
                   }`}
                 >
                   {o.label}
@@ -133,8 +133,8 @@ export default function Home({ searchValue }) {
       {/* Content */}
       <div className="px-6 lg:px-12 pt-10 pb-12">
         {searchValue && (
-          <p className="text-subtle text-sm mb-6">
-            Results for <span className="text-aqua">"{searchValue}"</span>
+          <p className="text-dim text-sm mb-6">
+            Results for <span className="text-kelp font-bold">"{searchValue}"</span>
           </p>
         )}
 
@@ -143,7 +143,7 @@ export default function Home({ searchValue }) {
             {Array.from({ length: 15 }).map((_, i) => (
               <div key={i} className="break-inside-avoid mb-4">
                 <div
-                  className="rounded-xl animate-pulse bg-ink/40 border border-aqua/8"
+                  className="rounded-xl animate-pulse bg-fill"
                   style={{ height: `${180 + (i % 5) * 60}px` }}
                 />
               </div>

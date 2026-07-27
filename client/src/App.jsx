@@ -14,7 +14,7 @@ function BottomNav() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="frost fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center pt-2 pb-4 px-2 md:hidden border-t border-line/20">
+    <nav className="frost fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center pt-2 pb-4 px-2 md:hidden border-t border-line">
       {[
         { to: '/', icon: 'home', label: 'Home' },
         { to: '/auth', icon: 'search', label: 'Search' },
@@ -25,7 +25,7 @@ function BottomNav() {
           key={to}
           to={to}
           className={`flex flex-col items-center gap-0.5 px-4 py-1 rounded-xl transition-all ${
-            isActive(to) ? 'text-aqua bg-aqua-bright/10' : 'text-mist hover:text-aqua'
+            isActive(to) ? 'text-kelp bg-kelp-tint' : 'text-dim hover:text-ink'
           }`}
         >
           <span className="material-symbols-outlined text-[22px]">{icon}</span>

@@ -4,10 +4,10 @@ export default function MasonryGrid({ pins, onSaveChange }) {
   if (!pins.length) {
     return (
       <div className="flex flex-col items-center justify-center py-24 gap-4">
-        <span className="material-symbols-outlined text-ink" style={{ fontSize: '64px' }}>
+        <span className="material-symbols-outlined text-line" style={{ fontSize: '64px' }}>
           water
         </span>
-        <p className="font-mono text-subtle text-sm">
+        <p className="font-mono text-fog text-sm">
           No pins found. Try adjusting your filters.
         </p>
       </div>

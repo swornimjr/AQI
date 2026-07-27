@@ -2,26 +2,29 @@
 
 /* ---------------------------------------------------------------------------
    Design tokens — the single source of truth for the AquaScape Inspire look.
-   Deep-water darks, one bioluminescent aqua accent, warm amber for equipment.
+   Light gallery: warm paper neutrals let the photography carry the color;
+   one deep kelp-green accent is reserved for actions and active states.
 --------------------------------------------------------------------------- */
 @theme {
-  /* Water column — darkest to lightest */
-  --color-abyss: #061613;
-  --color-deep: #0b1f1b;
-  --color-surface: #13221f;
-  --color-ink: #283834;
-  --color-line: #3c4a46;
+  /* Surfaces */
+  --color-page: #faf9f7;
+  --color-card: #ffffff;
+  --color-fill: #f1efea;
+  --color-line: #e7e4de;
 
   /* Text */
-  --color-foam: #d4e6e1;
-  --color-mist: #bacac5;
-  --color-subtle: #859490;
+  --color-ink: #20241f;
+  --color-dim: #5b635c;
+  --color-fog: #98a099;
 
-  /* Accents */
-  --color-aqua: #57f1db;
-  --color-aqua-bright: #2dd4bf;
-  --color-aqua-deep: #003731;
-  --color-amber: #e8a954;
+  /* Accent */
+  --color-kelp: #176a4d;
+  --color-kelp-deep: #0f4f39;
+  --color-kelp-tint: #e9f3ee;
+
+  /* Secondary accent (equipment) */
+  --color-amber: #92600f;
+  --color-amber-tint: #f8efdc;
 
   /* Type */
   --font-sans: 'Manrope', sans-serif;
@@ -29,15 +32,14 @@
 }
 
 body {
-  background-color: var(--color-abyss);
-  /* Ambient light falling through the water surface */
-  background-image:
-    radial-gradient(ellipse 70% 45% at 18% -8%, rgba(87, 241, 219, 0.07), transparent),
-    radial-gradient(ellipse 55% 35% at 85% -5%, rgba(45, 212, 191, 0.05), transparent);
-  background-attachment: fixed;
-  color: var(--color-foam);
+  background-color: var(--color-page);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(23, 106, 77, 0.18);
 }
 
 #root {
@@ -53,25 +55,25 @@ body {
   user-select: none;
 }
 
-/* ---------------------------------------------------------------------------
-   Shared components
---------------------------------------------------------------------------- */
-/* Small uppercase mono label — the app's signature secondary type style */
+/* Small uppercase mono label — used sparingly for metadata and eyebrows */
 @utility mono-caps {
   @apply font-mono text-[11px] tracking-widest uppercase;
 }
 
+/* ---------------------------------------------------------------------------
+   Shared components
+--------------------------------------------------------------------------- */
 @layer components {
-  /* Solid aqua call-to-action */
+  /* Solid accent call-to-action */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-1.5 bg-aqua text-aqua-deep font-bold
-      hover:brightness-110 active:scale-95 transition-all disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-1.5 bg-kelp text-white font-bold
+      hover:bg-kelp-deep active:scale-[0.98] transition-all disabled:opacity-50;
   }
 
   /* Quiet bordered button */
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-1.5 bg-ink/25 border border-line/50
-      text-subtle hover:text-foam transition-colors;
+    @apply inline-flex items-center justify-center gap-1.5 bg-card border border-line
+      text-dim hover:text-ink hover:border-fog/60 transition-colors;
   }
 
   /* Filter / sort chip */
@@ -79,89 +81,64 @@ body {
     @apply shrink-0 rounded-full mono-caps font-medium px-4 py-1.5 transition-colors;
   }
   .pill-active {
-    @apply bg-aqua-bright text-aqua-deep;
+    @apply bg-kelp text-white;
   }
   .pill-idle {
-    @apply bg-ink/40 text-mist hover:text-foam;
+    @apply bg-fill text-dim hover:bg-line hover:text-ink;
   }
 
   /* Text input / select / textarea */
   .input-field {
-    @apply w-full bg-abyss text-foam placeholder:text-subtle/60 rounded-xl px-4 py-2.5 text-sm
-      outline-none border border-line/50 focus:border-aqua/40 focus:ring-1 focus:ring-aqua transition-all;
+    @apply w-full bg-card text-ink placeholder:text-fog rounded-xl px-4 py-2.5 text-sm
+      outline-none border border-line focus:border-kelp/50 focus:ring-1 focus:ring-kelp/40 transition-all;
   }
 
   .field-label {
-    @apply block font-mono text-[11px] tracking-widest uppercase text-subtle mb-1.5;
+    @apply block font-mono text-[11px] tracking-widest uppercase text-dim mb-1.5;
   }
 
-  /* Raised panel on the abyss background */
+  /* Raised panel on the paper background */
   .surface {
-    @apply bg-ink/25 border border-line/50;
+    @apply bg-card border border-line;
   }
 
-  /* Aqua data chip (flora, fauna, tags) */
+  /* Accent data chip (flora, fauna, tags) */
   .tag {
-    @apply inline-flex items-center gap-1 font-mono text-[11px] text-aqua rounded-full px-2.5 py-0.5
-      bg-aqua/10 border border-aqua/25;
+    @apply inline-flex items-center gap-1 font-mono text-[11px] text-kelp rounded-full px-2.5 py-0.5
+      bg-kelp-tint border border-kelp/15;
   }
   .tag-amber {
     @apply inline-flex items-center gap-1 font-mono text-[11px] text-amber rounded-full px-2.5 py-0.5
-      bg-amber/10 border border-amber/25;
+      bg-amber-tint border border-amber/15;
   }
 
   /* Error notice */
   .error-note {
-    @apply text-red-400 text-sm rounded-xl px-4 py-2.5 bg-red-500/10 border border-red-500/20;
+    @apply text-red-700 text-sm rounded-xl px-4 py-2.5 bg-red-50 border border-red-200;
   }
 
   /* Frosted sticky bar (navbar, filter bar, bottom nav) */
   .frost {
-    background: rgba(6, 22, 19, 0.82);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-}
-
-@layer components {
-  .glass-card {
-    background: rgba(6, 22, 19, 0.6);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    border: 1px solid rgba(87, 241, 219, 0.15);
-    transition: border-color 0.3s ease, transform 0.3s ease;
+    background: rgba(250, 249, 247, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
   }
 
-  .glass-card:hover {
-    border-color: rgba(87, 241, 219, 0.4);
-    transform: translateY(-4px);
+  /* Photo tile — the image is the card; no chrome */
+  .photo-card {
+    @apply relative overflow-hidden rounded-xl bg-fill cursor-pointer;
   }
 
+  /* Dark scrim for text laid over photos */
   .scrim-gradient {
-    background: linear-gradient(to top, rgba(6, 22, 19, 0.92) 0%, transparent 100%);
+    background: linear-gradient(to top, rgba(15, 20, 17, 0.82) 0%, transparent 100%);
   }
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #061613; }
-::-webkit-scrollbar-thumb { background: #283834; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #57f1db; }
-
-@keyframes waterShimmer {
-  0% { transform: translateX(-100%) skewX(-15deg); opacity: 0; }
-  50% { opacity: 0.15; }
-  100% { transform: translateX(200%) skewX(-15deg); opacity: 0; }
-}
-
-.water-shimmer::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 40%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(87, 241, 219, 0.3), transparent);
-  animation: waterShimmer 1.8s ease infinite;
-  pointer-events: none;
-}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-page); }
+::-webkit-scrollbar-thumb { background: #d9d5cd; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #b9b4a9; }
 
 @keyframes fadeRise {
   from { opacity: 0; transform: translateY(8px); }
@@ -174,8 +151,8 @@ body {
 
 @keyframes bubbleFloat {
   0% { transform: translateY(0); opacity: 0; }
-  15% { opacity: 0.5; }
-  85% { opacity: 0.5; }
+  15% { opacity: 0.6; }
+  85% { opacity: 0.6; }
   100% { transform: translateY(-120px); opacity: 0; }
 }
 
@@ -183,7 +160,7 @@ body {
   position: absolute;
   bottom: -10px;
   border-radius: 9999px;
-  border: 1px solid rgba(87, 241, 219, 0.35);
+  border: 1px solid rgba(23, 106, 77, 0.3);
   animation: bubbleFloat 6s ease-in infinite;
   pointer-events: none;
 }

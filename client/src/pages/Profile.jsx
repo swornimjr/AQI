@@ -35,13 +35,13 @@ export default function Profile() {
 
   if (loading) return (
     <div className="max-w-5xl mx-auto px-10 py-10">
-      <div className="rounded-2xl animate-pulse h-32 mb-6 bg-ink/30" />
+      <div className="rounded-2xl animate-pulse h-32 mb-6 bg-fill" />
     </div>
   );
 
   if (!user) return (
     <div className="flex items-center justify-center py-24">
-      <p className="font-mono text-subtle">User not found.</p>
+      <p className="font-mono text-fog">User not found.</p>
     </div>
   );
 
@@ -53,22 +53,22 @@ export default function Profile() {
           <img
             src={user.avatar}
             alt={user.username}
-            className="w-20 h-20 rounded-full object-cover shrink-0 border-2 border-aqua/30"
+            className="w-20 h-20 rounded-full object-cover shrink-0 border border-line"
           />
         ) : (
-          <div className="w-20 h-20 rounded-full flex items-center justify-center text-aqua text-3xl font-bold shrink-0 bg-ink/50 border-2 border-aqua/20">
+          <div className="w-20 h-20 rounded-full flex items-center justify-center text-kelp text-3xl font-bold shrink-0 bg-kelp-tint border border-line">
             {user.username[0].toUpperCase()}
           </div>
         )}
         <div className="space-y-1.5">
-          <h1 className="text-2xl font-bold text-foam">{user.username}</h1>
+          <h1 className="text-2xl font-bold text-ink">{user.username}</h1>
           {user.bio && (
-            <p className="text-mist text-sm max-w-md leading-relaxed">{user.bio}</p>
+            <p className="text-dim text-sm max-w-md leading-relaxed">{user.bio}</p>
           )}
           {user.currentTanks && (
             <p className="text-sm">
-              <span className="mono-caps text-subtle">Current tanks: </span>
-              <span className="text-foam">{user.currentTanks}</span>
+              <span className="mono-caps text-fog">Current tanks: </span>
+              <span className="text-ink">{user.currentTanks}</span>
             </p>
           )}
           <div className="flex gap-5 pt-1">
@@ -78,8 +78,8 @@ export default function Profile() {
               { label: 'following', value: user.following?.length || 0 },
             ].map(({ label, value }) => (
               <div key={label} className="text-center">
-                <p className="text-foam font-bold text-lg leading-none">{value}</p>
-                <p className="font-mono text-subtle text-[10px] tracking-widest uppercase mt-0.5">{label}</p>
+                <p className="text-ink font-bold text-lg leading-none">{value}</p>
+                <p className="font-mono text-fog text-[10px] tracking-widest uppercase mt-0.5">{label}</p>
               </div>
             ))}
           </div>
@@ -87,15 +87,15 @@ export default function Profile() {
       </div>
 
       {/* Tabs */}
-      <div className="surface flex gap-1 mb-6 p-1 rounded-xl w-fit">
+      <div className="flex gap-1 mb-6 p-1 rounded-xl w-fit bg-fill">
         {['posts', 'collections'].map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className={`mono-caps px-6 py-2 rounded-lg font-bold transition-all ${
               tab === t
-                ? 'bg-aqua text-aqua-deep shadow-lg'
-                : 'text-subtle hover:text-foam'
+                ? 'bg-kelp text-white'
+                : 'text-fog hover:text-ink'
             }`}
           >
             {t}
@@ -108,7 +108,7 @@ export default function Profile() {
       {tab === 'collections' && (
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
           {collections.length === 0 && (
-            <p className="font-mono text-subtle text-sm col-span-full py-12 text-center">
+            <p className="font-mono text-fog text-sm col-span-full py-12 text-center">
               No public collections yet.
             </p>
           )}
